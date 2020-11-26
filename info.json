@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "effb0aa3dafee7b77298044c4b761c9ad2851fc4",
+    "author": "OJWatson <oj.watson@hotmail.co.uk>",
+    "time": "2020-11-26 01:09:38",
+    "files": 1,
+    "merge": false,
+    "message": "CRAN submission\n"
+  },
+  "remote": "https://github.com/ropensci/rdhs",
+  "pkg": "rdhs"
+}
