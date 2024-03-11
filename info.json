@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "020d68856b8fbd7a4075a880a2754ea3c7d98e08",
+    "author": "OJ Watson <oj.watson@hotmail.co.uk>",
+    "time": "2023-11-20 14:38:44",
+    "files": 4,
+    "merge": true,
+    "message": "Merge pull request #148 from ropensci/issue-146\n\nparse_dfc(): convert dictionary to UTF-8 "
+  },
+  "repo": "https://github.com/ropensci/rdhs",
+  "pkg": "rdhs"
+}
