@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "a1e1b864c52d0a30825be182bc3bb64de3c2ce4b",
+    "author": "OJWatson <o.watson15@imperial.ac.uk>",
+    "time": "2025-02-27T15:28:59Z",
+    "files": 4,
+    "merge": false,
+    "message": "function to allow user to set internal rdhs client\n"
+  },
+  "repo": "https://github.com/ropensci/rdhs",
+  "pkg": "rdhs",
+  "time": "2026-08-30T07:36:59Z"
+}
