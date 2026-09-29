@@ -1,0 +1,219 @@
+# API request of DHS Indicator Data
+
+API request of DHS Indicator Data
+
+## Usage
+
+``` r
+dhs_data(
+  countryIds = NULL,
+  indicatorIds = NULL,
+  surveyIds = NULL,
+  selectSurveys = NULL,
+  surveyYear = NULL,
+  surveyYearStart = NULL,
+  surveyYearEnd = NULL,
+  surveyType = NULL,
+  surveyCharacteristicIds = NULL,
+  characteristicCategory = NULL,
+  characteristicLabel = NULL,
+  tagIds = NULL,
+  breakdown = NULL,
+  returnGeometry = NULL,
+  f = NULL,
+  returnFields = NULL,
+  perPage = NULL,
+  page = NULL,
+  client = NULL,
+  force = FALSE,
+  all_results = TRUE
+)
+```
+
+## Arguments
+
+- countryIds:
+
+  Specify a comma separated list of country ids to filter by. For a list
+  of countries use
+  `dhs_countries(returnFields=c("CountryName","DHS_CountryCode"))`
+
+- indicatorIds:
+
+  Specify a comma separated list of indicator ids to filter by. For a
+  list of indicators use
+  `dhs_indicators(returnFields=c("IndicatorId","Label","Definition"))`
+
+- surveyIds:
+
+  Specify a comma separated list of survey ids to filter by. For a list
+  of surveys use
+  `dhs_surveys(returnFields=c("SurveyId","SurveyYearLabel", "SurveyType","CountryName"))`
+
+- selectSurveys:
+
+  Specify to filter Data from the latest survey by adding
+  \`selectSurveys="latest"\` in conjunction with a Country Code and/or
+  Survey Type. Please Note: Not all indicators are present in the latest
+  surveys. To filter your API Indicator Data call to return the latest
+  survey data in which a specific set of indicators is present, add
+  \`selectSurveys="byIndicator"\` in conjunction with Indicator IDs,
+  Country Code, and/or Survey Type instead of using
+  \`selectSurveys="latest"\`
+
+- surveyYear:
+
+  Specify a comma separated list of survey years to filter by.
+
+- surveyYearStart:
+
+  Specify a range of Survey Years to filter Data on. surveyYearStart is
+  an inclusive value. Can be used alone or in conjunction with
+  surveyYearEnd.
+
+- surveyYearEnd:
+
+  Specify a range of Survey Years to filter Data on. surveyYearEnd is an
+  inclusive value. Can be used alone or in conjunction with
+  surveyYearStart.
+
+- surveyType:
+
+  Specify a survey type to filter by.
+
+- surveyCharacteristicIds:
+
+  Specify a survey characteristic id to filter data on surveys with the
+  specified survey characteristic. For a list of survey characteristics
+  use
+  `dhs_surveys(returnFields=c("SurveyId","SurveyYearLabel", "SurveyType","CountryName"))`
+
+- characteristicCategory:
+
+  Specify a survey characteristic category to filter data on surveys
+  with the specified survey characteristic category. This query is case
+  insensitive, but it only recognizes exact phrase matches. For example,
+  \`characteristicCategory="wealth"\` will return results that have a
+  characteristic category of \`Wealth\` while
+  \`characteristicCategory="wealth quintile"' will return results that
+  have a characteristic category of \`Wealth Quintile\`.
+
+- characteristicLabel:
+
+  Specify a survey characteristic category to filter data on surveys
+  with the specified survey characteristic category. This query is case
+  insensitive, but it only recognizes exact phrase matches. You can use
+  characteristicLabel on its own or in conjunction with
+  characteristicCategory.
+
+- tagIds:
+
+  Specify a tag id to filter data on indicators with the specified tag.
+  For a list of tags use
+  [`dhs_tags()`](https://docs.ropensci.org/rdhs/reference/dhs_tags.md)
+
+- breakdown:
+
+  Data can be requested at different levels via the breakdown parameter.
+  By default national data is returned and provides totals on a national
+  level. \`breakdown="subnational"\` data provides values on a
+  subnational level. \`breakdown="background"\` provides totals on
+  categorized basis. Examples are urban/rural, education and wealth
+  level. \`breakdown="all"\` provides all the data including
+  disaggregated data.
+
+- returnGeometry:
+
+  Coordinates can be requested from the API by including
+  \`returnGeometry=TRUE\` in your request. The default for this value is
+  false.
+
+- f:
+
+  You can specify the format of the data returned from the query as
+  HTML, JSON, PJSON, geoJSON, JSONP, XML or CSV. The default data format
+  is JSON.
+
+- returnFields:
+
+  Specify a list of attributes to be returned.
+
+- perPage:
+
+  Specify the number of results to be returned per page. By default the
+  API will return 100 results.
+
+- page:
+
+  Allows specifying a page number to obtain for the API request. By
+  default the API will return page 1.
+
+- client:
+
+  If the API request should be cached, then provide a client object
+  created by
+  [`client_dhs`](https://docs.ropensci.org/rdhs/reference/client_dhs.md)
+
+- force:
+
+  Should we force fetching the API results, and ignore any cached
+  results we have. Default = FALSE
+
+- all_results:
+
+  Boolean for if all results should be returned. If FALSE then the
+  specified page only will be returned. Default = TRUE
+
+## Value
+
+Returns a `data.table` of 27 (or less if `returnFields` is provided)
+data for your particular query. Details of properties returned with each
+row of data are provided at
+<https://api.dhsprogram.com/rest/dhs/data/fields>
+
+## Examples
+
+``` r
+
+if (FALSE) { # \dontrun{
+# A common use for the indicator data API will be to search for a specific
+# health indicator for a given country. For example to return the total
+# malaria prevalence according to RDT, given by the indicator ML_PMAL_C_RDT,
+# in Senegal since 2010:
+
+dat <- dhs_data(
+indicatorIds="ML_PMAL_C_RDT",
+countryIds="SN",
+surveyYearStart="2006"
+)
+
+# A complete list of examples for how each argument to the data api
+# endpoint can be provided is given below, which is a copy of each of
+# the examples listed in the API at:
+
+# https://api.dhsprogram.com/#/api-data.cfm
+
+
+dat <- dhs_data(countryIds="EG",all_results=FALSE)
+dat <- dhs_data(indicatorIds="FE_FRTR_W_TFR",all_results=FALSE)
+dat <- dhs_data(surveyIds="SN2010DHS",all_results=FALSE)
+dat <- dhs_data(selectSurveys="latest",all_results=FALSE)
+dat <- dhs_data(selectSurveys="byIndicator", indicatorIds="FE_CEBA_W_CH0",
+all_results=FALSE)
+dat <- dhs_data(surveyYear="2010",all_results=FALSE)
+dat <- dhs_data(surveyYearStart="2006",all_results=FALSE)
+dat <- dhs_data(surveyYearStart="1991", surveyYearEnd="2006",
+all_results=FALSE)
+dat <- dhs_data(surveyType="DHS",all_results=FALSE)
+dat <- dhs_data(surveyCharacteristicIds="32",all_results=FALSE)
+dat <- dhs_data(characteristicCategory="wealth quintile",all_results=FALSE)
+dat <- dhs_data(breakdown="all", countryIds="AZ", characteristicLabel="6+",
+all_results=FALSE)
+dat <- dhs_data(tagIds="1",all_results=FALSE)
+dat <- dhs_data(breakdown="subnational",all_results=FALSE)
+dat <- dhs_data(breakdown="background",all_results=FALSE)
+dat <- dhs_data(breakdown="all",all_results=FALSE)
+dat <- dhs_data(f="html",all_results=FALSE)
+dat <- dhs_data(f="geojson", returnGeometry="true",all_results=FALSE)
+} # }
+```

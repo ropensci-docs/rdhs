@@ -1,0 +1,48 @@
+# Toolkit
+
+## Overview
+
+The following is no longer needed as the CRAN version of haven is
+working. This vignette is still here though in case we need a non-CRAN
+pacakge in the future.
+
+------------------------------------------------------------------------
+
+In order to install `rdhs` you will require a working development
+environment. The following guide details how to do this across different
+operating systems. Please note this is only temporary while we wait for
+a development version of haven to make it to CRAN. Apologies for the
+inconvenience
+
+1.  **Windows**: Install
+    **[Rtools](https://cran.r-project.org/bin/windows/Rtools/)**. For
+    help on how to install **Rtools** please see the following
+    [guide](https://cran.r-project.org/bin/windows/Rtools/), paying
+    particular attention to the section about adding Rtools to your
+    system `PATH`.
+
+In order to find out which version of **Rtools** you will need to check
+which version of R you are running. This can be be found out using the
+[`sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html) function:
+
+``` r
+sessionInfo()
+R version 3.4.4 (2016-06-21)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 7 x64 (build 7601) Service Pack 1
+```
+
+2.  **Mac**: Install Xcode from the Mac App Store.
+
+3.  **Linux**: Install a compiler and various development libraries
+    (details vary across different flavors of Linux).
+
+Once a working development environment is ready then the following
+should work for you:
+
+``` r
+
+# install.packages("devtools")
+# devtools::install_github("ropensci/rdhs")
+# library(rdhs)
+```
