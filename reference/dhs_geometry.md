@@ -1,0 +1,133 @@
+# API request of DHS Geometry
+
+API request of DHS Geometry
+
+## Usage
+
+``` r
+dhs_geometry(
+  countryIds = NULL,
+  surveyIds = NULL,
+  surveyYear = NULL,
+  surveyYearStart = NULL,
+  surveyYearEnd = NULL,
+  surveyType = NULL,
+  f = NULL,
+  returnFields = NULL,
+  perPage = NULL,
+  page = NULL,
+  client = NULL,
+  force = FALSE,
+  all_results = TRUE
+)
+```
+
+## Arguments
+
+- countryIds:
+
+  Specify a comma separated list of country ids to filter by. For a list
+  of countries use
+  `dhs_countries(returnFields=c("CountryName","DHS_CountryCode"))`
+
+- surveyIds:
+
+  Specify a comma separated list of survey ids to filter by. For a list
+  of surveys use
+  `dhs_surveys(returnFields=c("SurveyId","SurveyYearLabel", "SurveyType","CountryName"))`
+
+- surveyYear:
+
+  Specify a comma separated list of survey years to filter by.
+
+- surveyYearStart:
+
+  Specify a range of Survey Years to filter Geometry on. surveyYearStart
+  is an inclusive value. Can be used alone or in conjunction with
+  surveyYearEnd.
+
+- surveyYearEnd:
+
+  Specify a range of Survey Years to filter Geometry on. surveyYearEnd
+  is an inclusive value. Can be used alone or in conjunction with
+  surveyYearStart.
+
+- surveyType:
+
+  Specify a survey type to filter by.
+
+- f:
+
+  You can specify the format of the data returned from the query as
+  HTML, JSON, PJSON, geoJSON, JSONP, XML or CSV. The default data format
+  is JSON.
+
+- returnFields:
+
+  Specify a list of attributes to be returned.
+
+- perPage:
+
+  Specify the number of results to be returned per page. By default the
+  API will return 100 results.
+
+- page:
+
+  Allows specifying a page number to obtain for the API request. By
+  default the API will return page 1.
+
+- client:
+
+  If the API request should be cached, then provide a client object
+  created by
+  [`client_dhs`](https://docs.ropensci.org/rdhs/reference/client_dhs.md)
+
+- force:
+
+  Should we force fetching the API results, and ignore any cached
+  results we have. Default = FALSE
+
+- all_results:
+
+  Boolean for if all results should be returned. If FALSE then the
+  specified page only will be returned. Default = TRUE.
+
+## Value
+
+Returns a `data.table` of 7 (or less if `returnFields` is provided)
+geometry with their corresponding details. A detailed description of all
+the attributes returned is provided at
+<https://api.dhsprogram.com/rest/dhs/geometry/fields>
+
+## Examples
+
+``` r
+
+if (FALSE) { # \dontrun{
+# The geometry API endpoint returns the spatial geometry for countries, and
+# can then be used to recreate the spatial polygon for a given country. For
+# example to return the coordinates for the Senegal 2010 DHS survey:
+
+dat <- dhs_geometry(surveyIds="SN2010DHS")
+
+# At the moment there is no function to convert the coordinates returned by
+# the API but this will be in the next version of rdhs. For those interested
+# look at the geojson vignette for an alternative way to produce plots.
+
+# A complete list of examples for how each argument to the geometry
+# API endpoint can be provided is given below, which is a
+# copy of each of the examples listed in the API at:
+
+# https://api.dhsprogram.com/#/api-geometry.cfm
+
+
+dat <- dhs_geometry(countryIds="EG",all_results=FALSE)
+dat <- dhs_geometry(surveyIds="SN2010DHS",all_results=FALSE)
+dat <- dhs_geometry(surveyYear="2010",all_results=FALSE)
+dat <- dhs_geometry(surveyYearStart="2006",all_results=FALSE)
+dat <- dhs_geometry(surveyYearStart="1991", surveyYearEnd="2006",
+all_results=FALSE)
+dat <- dhs_geometry(surveyType="DHS",all_results=FALSE)
+dat <- dhs_geometry(f="geojson",all_results=FALSE)
+} # }
+```
